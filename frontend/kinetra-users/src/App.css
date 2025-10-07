@@ -1,0 +1,246 @@
+.app-shell {
+  padding: 2.5rem clamp(1.5rem, 5vw, 4rem) 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  color: #f2f6ff;
+}
+
+.app-shell__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.app-shell__eyebrow {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+}
+
+.app-shell__header h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  margin: 0;
+}
+
+.app-shell__helper {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, rgba(46, 74, 168, 0.4), rgba(12, 18, 31, 0.9));
+  border: 1px solid rgba(123, 162, 255, 0.25);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 1.5rem 3rem -2rem rgba(10, 20, 40, 0.8);
+}
+
+.summary-card__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0 0 0.75rem;
+}
+
+.summary-card__value {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.summary-card__helper {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.grid__main {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid__sidebar {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.panel {
+  background: rgba(10, 18, 32, 0.8);
+  border: 1px solid rgba(123, 162, 255, 0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: rgba(17, 29, 54, 0.8);
+  border-bottom: 1px solid rgba(123, 162, 255, 0.25);
+}
+
+.panel__header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.panel__header p {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.panel__table-wrapper {
+  overflow-x: auto;
+}
+
+.panel table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 32rem;
+}
+
+.panel th,
+.panel td {
+  padding: 0.9rem 1.5rem;
+  text-align: left;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(123, 162, 255, 0.12);
+}
+
+.panel th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+.panel tbody tr:hover {
+  background: rgba(46, 74, 168, 0.12);
+}
+
+.panel__empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  opacity: 0.65;
+}
+
+.entity-form {
+  background: rgba(12, 20, 36, 0.85);
+  border: 1px solid rgba(123, 162, 255, 0.25);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.entity-form h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.entity-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.entity-form input,
+.entity-form select {
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(123, 162, 255, 0.35);
+  background: rgba(7, 12, 22, 0.9);
+  color: inherit;
+}
+
+.entity-form input:focus,
+.entity-form select:focus,
+.entity-form button:focus {
+  outline: 2px solid rgba(123, 162, 255, 0.55);
+  outline-offset: 2px;
+}
+
+.entity-form button {
+  margin-top: 0.25rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, #3f7cff, #6a5bff);
+  color: #f6f8ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entity-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1rem 2rem -1.5rem rgba(79, 124, 255, 0.8);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(123, 162, 255, 0.2);
+  color: #cdd8ff;
+}
+
+.chip--blue {
+  background: rgba(68, 125, 255, 0.2);
+  color: #b5cbff;
+}
+
+.chip--green {
+  background: rgba(88, 196, 156, 0.2);
+  color: #a8f5de;
+}
+
+.chip--amber {
+  background: rgba(255, 170, 86, 0.2);
+  color: #ffd7a8;
+}
+
+.chip--purple {
+  background: rgba(176, 114, 255, 0.2);
+  color: #e0c5ff;
+}
+
+.cell-primary {
+  font-weight: 600;
+}
