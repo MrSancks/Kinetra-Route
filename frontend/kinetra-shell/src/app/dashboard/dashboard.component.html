@@ -8,75 +8,116 @@
     <nav class="menu">
       <p class="menu__title">Microfrontends</p>
       <ul>
-        <li>
-          <span class="menu__tag menu__tag--react">Users</span>
-          <span class="menu__label">Gestión de repartidores y restaurantes</span>
-        </li>
-        <li>
-          <span class="menu__tag menu__tag--vue">Orders</span>
-          <span class="menu__label">Pedidos activos y planificación de rutas</span>
-        </li>
-        <li>
-          <span class="menu__tag menu__tag--svelte">Chat</span>
-          <span class="menu__label">Comunicación en tiempo real</span>
+        <li
+          *ngFor="let microfrontend of microfrontends"
+          class="menu__item"
+          [class.menu__item--active]="microfrontend.id === selectedMicrofrontendId"
+          [class.menu__item--disabled]="microfrontend.status !== 'ready'"
+        >
+          <button
+            type="button"
+            class="menu__button"
+            (click)="selectMicrofrontend(microfrontend.id)"
+            [disabled]="microfrontend.status !== 'ready'"
+          >
+            <span
+              class="menu__tag"
+              [ngClass]="{
+                'menu__tag--react': microfrontend.tech === 'React',
+                'menu__tag--vue': microfrontend.tech === 'Vue',
+                'menu__tag--svelte': microfrontend.tech === 'Svelte'
+              }"
+            >
+              {{ microfrontend.tech }}
+            </span>
+            <span class="menu__name">{{ microfrontend.name }}</span>
+            <span class="menu__label">{{ microfrontend.summary }}</span>
+            <span class="menu__url">{{ microfrontend.url }}</span>
+          </button>
         </li>
       </ul>
     </nav>
 
-    <button class="logout" (click)="logout()">Cerrar sesión</button>
+    <button class="logout" (click)="logout()">Cerrar sesion</button>
   </aside>
 
   <section class="dashboard__content">
     <header class="content-header">
       <div>
         <h1>Panel Operativo</h1>
-        <p>Orquesta y monitorea cada módulo de Kinetra-Route desde esta shell Angular.</p>
+        <p>Orquesta y monitorea cada modulo de Kinetra-Route desde esta shell Angular.</p>
       </div>
       <div class="content-header__status">
         <span class="status-dot"></span>
-        <span>Todos los microfrontends listos</span>
+        <span>{{ selectedMicrofrontend.name }} listo para renderizar</span>
       </div>
     </header>
 
     <div class="cards">
-      <article class="card">
+      <article class="card" *ngFor="let microfrontend of microfrontends">
         <header>
-          <h2>Usuarios</h2>
-          <span class="badge badge--react">React</span>
+          <h2>{{ microfrontend.name }}</h2>
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge--react': microfrontend.tech === 'React',
+              'badge--vue': microfrontend.tech === 'Vue',
+              'badge--svelte': microfrontend.tech === 'Svelte'
+            }"
+          >
+            {{ microfrontend.tech }}
+          </span>
         </header>
-        <p>
-          Conecta el microfrontend de <strong>Users</strong> para administrar repartidores, restaurantes y permisos.
-        </p>
+        <p>{{ microfrontend.description }}</p>
         <footer>
-          <span class="link-placeholder">Carga remota pendiente</span>
-        </footer>
-      </article>
-
-      <article class="card">
-        <header>
-          <h2>Pedidos</h2>
-          <span class="badge badge--vue">Vue</span>
-        </header>
-        <p>
-          Integra el microfrontend de <strong>Orders</strong> para monitorear pedidos en tiempo real y optimizar rutas.
-        </p>
-        <footer>
-          <span class="link-placeholder">Carga remota pendiente</span>
-        </footer>
-      </article>
-
-      <article class="card">
-        <header>
-          <h2>Chat</h2>
-          <span class="badge badge--svelte">Svelte</span>
-        </header>
-        <p>
-          Enlaza el microfrontend de <strong>Chat</strong> y habilita la comunicación entre repartidores y clientes.
-        </p>
-        <footer>
-          <span class="link-placeholder">Disponible en http://localhost:4203</span>
+          <ng-container *ngIf="microfrontend.status === 'ready'; else comingSoon">
+            <button
+              type="button"
+              class="card__action"
+              (click)="selectMicrofrontend(microfrontend.id)"
+              [class.card__action--active]="microfrontend.id === selectedMicrofrontendId"
+            >
+              <ng-container *ngIf="microfrontend.id === selectedMicrofrontendId; else viewAction">
+                Mostrando en la shell
+              </ng-container>
+              <ng-template #viewAction>Ver en la shell</ng-template>
+            </button>
+          </ng-container>
+          <ng-template #comingSoon>
+            <span class="link-placeholder">En integracion</span>
+          </ng-template>
         </footer>
       </article>
     </div>
+
+    <section class="viewer">
+      <header class="viewer__header">
+        <h2>{{ selectedMicrofrontend.name }}</h2>
+        <p>{{ selectedMicrofrontend.summary }}</p>
+      </header>
+
+      <ng-container *ngIf="selectedMicrofrontendUrl as iframeUrl; else viewerOffline">
+        <div class="viewer__frame">
+          <iframe
+            [src]="iframeUrl"
+            title="{{ selectedMicrofrontend.name }} microfrontend"
+            loading="lazy"
+            allow="clipboard-write; encrypted-media"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+        <p class="viewer__hint">
+          Ejecuta <code>npm run dev</code> en
+          <code>{{ selectedMicrofrontend.id === 'users' ? 'frontend/kinetra-users' : 'frontend/kinetra-orders' }}</code>
+          para ver datos en vivo.
+        </p>
+      </ng-container>
+
+      <ng-template #viewerOffline>
+        <div class="viewer__placeholder">
+          <p>Este microfrontend aun no esta disponible para renderizar en la shell.</p>
+        </div>
+      </ng-template>
+    </section>
   </section>
 </div>
