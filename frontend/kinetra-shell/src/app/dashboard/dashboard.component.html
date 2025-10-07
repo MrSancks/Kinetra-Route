@@ -1,0 +1,82 @@
+<div class="dashboard">
+  <aside class="dashboard__sidebar">
+    <div class="logo">
+      <span class="logo__mark">KR</span>
+      <span class="logo__text">Kinetra-Route</span>
+    </div>
+
+    <nav class="menu">
+      <p class="menu__title">Microfrontends</p>
+      <ul>
+        <li>
+          <span class="menu__tag menu__tag--react">Users</span>
+          <span class="menu__label">Gestión de repartidores y restaurantes</span>
+        </li>
+        <li>
+          <span class="menu__tag menu__tag--vue">Orders</span>
+          <span class="menu__label">Pedidos activos y planificación de rutas</span>
+        </li>
+        <li>
+          <span class="menu__tag menu__tag--svelte">Chat</span>
+          <span class="menu__label">Comunicación en tiempo real</span>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="logout" (click)="logout()">Cerrar sesión</button>
+  </aside>
+
+  <section class="dashboard__content">
+    <header class="content-header">
+      <div>
+        <h1>Panel Operativo</h1>
+        <p>Orquesta y monitorea cada módulo de Kinetra-Route desde esta shell Angular.</p>
+      </div>
+      <div class="content-header__status">
+        <span class="status-dot"></span>
+        <span>Todos los microfrontends listos</span>
+      </div>
+    </header>
+
+    <div class="cards">
+      <article class="card">
+        <header>
+          <h2>Usuarios</h2>
+          <span class="badge badge--react">React</span>
+        </header>
+        <p>
+          Conecta el microfrontend de <strong>Users</strong> para administrar repartidores, restaurantes y permisos.
+        </p>
+        <footer>
+          <span class="link-placeholder">Carga remota pendiente</span>
+        </footer>
+      </article>
+
+      <article class="card">
+        <header>
+          <h2>Pedidos</h2>
+          <span class="badge badge--vue">Vue</span>
+        </header>
+        <p>
+          Integra el microfrontend de <strong>Orders</strong> para monitorear pedidos en tiempo real y optimizar rutas.
+        </p>
+        <footer>
+          <span class="link-placeholder">Carga remota pendiente</span>
+        </footer>
+      </article>
+
+      <article class="card">
+        <header>
+          <h2>Chat</h2>
+          <span class="badge badge--svelte">Svelte</span>
+        </header>
+        <p>
+          Enlaza el microfrontend de <strong>Chat</strong> y habilita la comunicación entre repartidores y clientes.
+        </p>
+        <footer>
+          <span class="link-placeholder">Disponible en http://localhost:4203</span>
+        </footer>
+      </article>
+    </div>
+  </section>
+</div>

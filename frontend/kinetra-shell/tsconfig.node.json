@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/node",
+    "module": "commonjs",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "karma.conf.js",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
