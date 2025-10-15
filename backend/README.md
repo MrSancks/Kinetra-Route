@@ -27,6 +27,16 @@ Todos los servicios comparten la misma cadena en `ConnectionStrings:Default`, ap
 
 Recuerda propagar `ConnectionStrings__Default` cuando despliegues en Docker o Render.
 
+Para levantar todo con Docker Compose, copia `.env.example` a `.env`, ajusta los valores y luego ejecuta:
+
+```bash
+cp .env.example .env
+# edita .env con la cadena de Supabase, secreto JWT y credenciales de admin
+docker compose up --build
+```
+
+`docker-compose.yml` leerá ese archivo y rellenará automáticamente `ConnectionStrings__Default`, `Jwt__*` y `Seed__*`, cumpliendo con lo que exigen los `appsettings`.
+
 ## Ejecución con Docker
 
 Todos los servicios incluyen un `Dockerfile` multi-stage. Para construirlos de forma manual:

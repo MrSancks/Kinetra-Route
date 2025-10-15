@@ -10,6 +10,12 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
+      Jwt__Issuer: ${AUTH_JWT_ISSUER:-}
+      Jwt__Audience: ${AUTH_JWT_AUDIENCE:-}
+      Jwt__SecretKey: ${AUTH_JWT_SECRET:-}
+      Seed__AdminEmail: ${AUTH_ADMIN_EMAIL:-}
+      Seed__AdminPassword: ${AUTH_ADMIN_PASSWORD:-}
     networks:
       - kinetra-net
 
@@ -22,6 +28,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
@@ -34,6 +41,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
@@ -46,6 +54,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
@@ -58,6 +67,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
@@ -70,6 +80,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
@@ -82,6 +93,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: ${CONNECTION_STRING:-}
     networks:
       - kinetra-net
 
