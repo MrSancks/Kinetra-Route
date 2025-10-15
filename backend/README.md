@@ -16,6 +16,17 @@ Este directorio contiene los proyectos base de los microservicios de Kinetra-Rou
 
 Cada proyecto puede ejecutarse de forma independiente con `dotnet run` dentro de la carpeta correspondiente (ver documentación individual).
 
+## Configuración de base de datos
+
+Todos los servicios comparten la misma cadena en `ConnectionStrings:Default`, apuntando a la instancia de Supabase (`postgresql://postgres:z3fa3mpJ40AgR3H7@db.znvofmdsyrlvdlcyvsur.supabase.co:5432/postgres`). No existe fallback a proveedores en memoria; si necesitas otro servidor cambia esa cadena (p. ej. mediante variables de entorno) antes de iniciar los servicios.
+
+- `AuthService`, `RidersService` y `NotificationsService` usan Entity Framework Core con contextos especializados para identidades, repartidores y notificaciones.
+- `OrdersService` y `RoutesService` almacenan pedidos, planes de ruta y ubicaciones en persistencia duradera mediante EF Core y serialización controlada.
+- `PaymentsService` registra el historial de cálculos (tarifas, liquidaciones, comisiones, reportes) para auditoría.
+- `ReportsService` persiste los eventos de completado de pedidos y recompone las vistas materializadas al arrancar mediante un hosted service.
+
+Recuerda propagar `ConnectionStrings__Default` cuando despliegues en Docker o Render.
+
 ## Ejecución con Docker
 
 Todos los servicios incluyen un `Dockerfile` multi-stage. Para construirlos de forma manual:

@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddRouteInfrastructure();
+builder.Services.AddRouteInfrastructure(builder.Configuration);
 builder.Services.AddRouteApplication();
 
 var app = builder.Build();

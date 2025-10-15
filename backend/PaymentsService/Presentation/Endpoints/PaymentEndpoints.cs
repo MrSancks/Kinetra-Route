@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using PaymentsService.Application.Services;
@@ -11,33 +12,33 @@ public static class PaymentEndpoints
     {
         var group = app.MapGroup("/payments").WithTags("Payments");
 
-        group.MapPost("/tariff", (CalculateTariffRequest request, PaymentApplicationService service) =>
+        group.MapPost("/tariff", async (CalculateTariffRequest request, PaymentApplicationService service, CancellationToken cancellationToken) =>
         {
-            var response = service.CalculateOrderTariff(request);
+            var response = await service.CalculateOrderTariffAsync(request, cancellationToken);
             return Results.Ok(response);
         })
         .WithName("CalculateOrderTariff")
         .Produces(StatusCodes.Status200OK);
 
-        group.MapPost("/settlements/weekly", (WeeklySettlementRequest request, PaymentApplicationService service) =>
+        group.MapPost("/settlements/weekly", async (WeeklySettlementRequest request, PaymentApplicationService service, CancellationToken cancellationToken) =>
         {
-            var response = service.GenerateWeeklySettlement(request);
+            var response = await service.GenerateWeeklySettlementAsync(request, cancellationToken);
             return Results.Ok(response);
         })
         .WithName("GenerateWeeklySettlement")
         .Produces(StatusCodes.Status200OK);
 
-        group.MapPost("/platform/commission", (PlatformCommissionRequest request, PaymentApplicationService service) =>
+        group.MapPost("/platform/commission", async (PlatformCommissionRequest request, PaymentApplicationService service, CancellationToken cancellationToken) =>
         {
-            var response = service.CalculatePlatformCommission(request);
+            var response = await service.CalculatePlatformCommissionAsync(request, cancellationToken);
             return Results.Ok(response);
         })
         .WithName("CalculatePlatformCommission")
         .Produces(StatusCodes.Status200OK);
 
-        group.MapPost("/reports/realtime", (RealTimeReportRequest request, PaymentApplicationService service) =>
+        group.MapPost("/reports/realtime", async (RealTimeReportRequest request, PaymentApplicationService service, CancellationToken cancellationToken) =>
         {
-            var response = service.GenerateRealTimeReport(request);
+            var response = await service.GenerateRealTimeReportAsync(request, cancellationToken);
             return Results.Ok(response);
         })
         .WithName("GenerateRealTimeReport")

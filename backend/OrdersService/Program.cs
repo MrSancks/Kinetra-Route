@@ -1,6 +1,9 @@
+using System;
+using Microsoft.EntityFrameworkCore;
 using OrdersService.Application.Abstractions;
 using OrdersService.Application.Commands;
 using OrdersService.Application.Queries;
+using OrdersService.Infrastructure.Data;
 using OrdersService.Infrastructure.Integrations;
 using OrdersService.Infrastructure.Messaging;
 using OrdersService.Infrastructure.Persistence;
@@ -13,13 +16,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPresentation();
 
 builder.Services.AddSingleton<IClock, SystemClock>();
-builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
+
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' is not configured for OrdersService.");
+
+builder.Services.AddDbContext<OrdersDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddSingleton<IEventPublisher, InMemoryEventPublisher>();
 builder.Services.AddSingleton<IEventStore>(sp => (IEventStore)sp.GetRequiredService<IEventPublisher>());
 builder.Services.AddSingleton<IRestaurantIntegration, FakeRestaurantIntegration>();
 builder.Services.AddSingleton<IRiderAssignmentService, InMemoryRiderAssignmentService>();
-builder.Services.AddSingleton<IOrderCommandService, OrderCommandService>();
-builder.Services.AddSingleton<IOrderQueryService, OrderQueryService>();
+builder.Services.AddScoped<IOrderCommandService, OrderCommandService>();
+builder.Services.AddScoped<IOrderQueryService, OrderQueryService>();
 
 var app = builder.Build();
 

@@ -2,6 +2,7 @@ using AuthService.Application.Abstractions;
 using AuthService.Application.Behaviors;
 using AuthService.Application.Features.Auth.Commands;
 using AuthService.Application.Validators;
+using System;
 using AuthService.Infrastructure.Persistence;
 using AuthService.Infrastructure.Repositories;
 using AuthService.Infrastructure.Seeders;
@@ -22,8 +23,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' is not configured for AuthService.");
+
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseInMemoryDatabase("AuthServiceDb"));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();

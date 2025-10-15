@@ -1,8 +1,12 @@
+using System;
+using Microsoft.EntityFrameworkCore;
 using PaymentsService.Application.Abstractions;
 using PaymentsService.Application.Services;
 using PaymentsService.Domain.Services;
 using PaymentsService.Domain.ValueObjects;
 using PaymentsService.Infrastructure.Configuration;
+using PaymentsService.Infrastructure.Data;
+using PaymentsService.Infrastructure.Repositories;
 using PaymentsService.Infrastructure.Time;
 using PaymentsService.Presentation;
 using PaymentsService.Presentation.Endpoints;
@@ -27,6 +31,14 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddSingleton<PaymentDomainService>();
 builder.Services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 builder.Services.AddScoped<PaymentApplicationService>();
+
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' is not configured for PaymentsService.");
+
+builder.Services.AddDbContext<PaymentsDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IPaymentComputationRepository, PaymentComputationRepository>();
 
 var app = builder.Build();
 

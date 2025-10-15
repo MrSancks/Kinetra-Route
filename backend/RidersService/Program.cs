@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using RidersService.Application.Services;
 using RidersService.Infrastructure.Data;
@@ -10,7 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<RidersDbContext>(options => options.UseInMemoryDatabase("RidersServiceDb"));
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' is not configured for RidersService.");
+
+builder.Services.AddDbContext<RidersDbContext>(options =>
+    options.UseNpgsql(connectionString));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IRiderRepository, RiderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

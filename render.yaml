@@ -1,0 +1,115 @@
+services:
+  - type: web
+    name: kinetra-auth-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/AuthService
+    dockerfilePath: backend/AuthService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+      - key: Jwt__Issuer
+        fromSecret: authservice-jwt-issuer
+      - key: Jwt__Audience
+        fromSecret: authservice-jwt-audience
+      - key: Jwt__SecretKey
+        fromSecret: authservice-jwt-secret
+      - key: Seed__AdminEmail
+        fromSecret: authservice-admin-email
+      - key: Seed__AdminPassword
+        fromSecret: authservice-admin-password
+
+  - type: web
+    name: kinetra-riders-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/RidersService
+    dockerfilePath: backend/RidersService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+
+  - type: web
+    name: kinetra-orders-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/OrdersService
+    dockerfilePath: backend/OrdersService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+
+  - type: web
+    name: kinetra-routes-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/RoutesService
+    dockerfilePath: backend/RoutesService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+
+  - type: web
+    name: kinetra-payments-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/PaymentsService
+    dockerfilePath: backend/PaymentsService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+
+  - type: web
+    name: kinetra-notifications-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/NotificationsService
+    dockerfilePath: backend/NotificationsService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
+
+  - type: web
+    name: kinetra-reports-service
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerContext: backend/ReportsService
+    dockerfilePath: backend/ReportsService/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        fromSecret: supabase-postgres-url
